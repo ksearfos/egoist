@@ -21,9 +21,6 @@ The MutableHash/Array are built from the Mutability mix-in, so downloading this 
 a library for you to add the same capabilities to any other Class you might want.
 
 Also included is the ability to revert to the original form with a single method call.
-
-The MutableHash is actually built off the HashWithIndifferentAccess, because I strongly believe \
-that the days of trying to remember whether the key was a Symbol or a String should be gone.
 EOS
   s.authors     = ["Kelli Searfos"]
   s.email       = 'ksearfos@covermymeds.com'
@@ -34,6 +31,4 @@ EOS
   s.add_development_dependency 'guard-rspec'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'gem-release'
-
-  s.add_runtime_dependency 'active_support/hash_with_indifferent_access'
 end

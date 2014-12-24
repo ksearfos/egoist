@@ -4,7 +4,7 @@ module Mutability
   describe MutableHash do
     subject { described_class.new(original) }
     let(:original) do
-      HashWithIndifferentAccess.new(a: 'alpha', b: 'beta', g: 'gamma', d: 'delta', e: 'epsilon')
+      { a: 'alpha', b: 'beta', g: 'gamma', d: 'delta', e: 'epsilon' }
     end
     let(:additional) do
       { z: 'zeta', y: 'eta', th: 'theta' }
