@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mutability (1.0.0)
+    mutability (1.0.2)
 
 GEM
   remote: http://rubygems.org/
@@ -9,95 +9,12 @@ GEM
     ast (2.0.0)
     astrolabe (1.3.0)
       parser (>= 2.2.0.pre.3, < 3.0)
-    binding_of_caller (0.7.2)
-      debug_inspector (>= 0.0.1)
-    bond (0.5.1)
-    celluloid (0.16.0)
-      timers (~> 4.0.0)
-    coderay (1.1.0)
-    columnize (0.9.0)
-    debug_inspector (0.0.2)
-    debugger (1.6.8)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.5)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.7)
-    diff-lcs (1.2.5)
-    ffi (1.9.6)
-    formatador (0.2.5)
     gem-release (0.7.3)
-    guard (2.10.5)
-      formatador (>= 0.2.4)
-      listen (~> 2.7)
-      lumberjack (~> 1.0)
-      nenv (~> 0.1)
-      pry (>= 0.9.12)
-      thor (>= 0.18.1)
-    guard-compat (1.2.0)
-    guard-rspec (4.5.0)
-      guard (~> 2.1)
-      guard-compat (~> 1.1)
-      rspec (>= 2.99.0, < 4.0)
-    hitimes (1.2.2)
-    interception (0.5)
-    jist (1.5.1)
-      json
-    json (1.8.1)
-    listen (2.8.4)
-      celluloid (>= 0.15.2)
-      rb-fsevent (>= 0.9.3)
-      rb-inotify (>= 0.9)
-    lumberjack (1.0.9)
-    method_source (0.8.2)
-    nenv (0.1.1)
     parser (2.2.0.pre.8)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
     powerpack (0.0.9)
-    pry (0.10.1)
-      coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
-    pry-debugger (0.2.3)
-      debugger (~> 1.3)
-      pry (>= 0.9.10, < 0.11.0)
-    pry-doc (0.6.0)
-      pry (~> 0.9)
-      yard (~> 0.8)
-    pry-docmore (0.1.1)
-      pry
-      pry-doc
-    pry-plus (1.0.0)
-      bond
-      jist
-      pry-debugger
-      pry-doc
-      pry-docmore
-      pry-rescue
-      pry-stack_explorer
-    pry-rescue (1.4.1)
-      interception (>= 0.5)
-      pry
-    pry-stack_explorer (0.4.9.1)
-      binding_of_caller (>= 0.7)
-      pry (>= 0.9.11)
     rainbow (2.0.0)
-    rb-fsevent (0.9.4)
-    rb-inotify (0.9.5)
-      ffi (>= 0.5.0)
-    rspec (3.1.0)
-      rspec-core (~> 3.1.0)
-      rspec-expectations (~> 3.1.0)
-      rspec-mocks (~> 3.1.0)
-    rspec-core (3.1.7)
-      rspec-support (~> 3.1.0)
-    rspec-expectations (3.1.2)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.1.0)
-    rspec-mocks (3.1.3)
-      rspec-support (~> 3.1.0)
-    rspec-support (3.1.2)
     rubocop (0.28.0)
       astrolabe (~> 1.3)
       parser (>= 2.2.0.pre.7, < 3.0)
@@ -106,17 +23,11 @@ GEM
       ruby-progressbar (~> 1.4)
     ruby-progressbar (1.7.1)
     slop (3.6.0)
-    thor (0.19.1)
-    timers (4.0.1)
-      hitimes
-    yard (0.8.7.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   gem-release
-  guard-rspec
   mutability!
-  pry-plus
   rubocop

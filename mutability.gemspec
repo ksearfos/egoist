@@ -29,11 +29,11 @@ method call.
 EOS
   s.authors     = ['Kelli Searfos']
   s.email       = 'ksearfos@covermymeds.com'
-  s.files       = ['lib/mutability.rb']
+  s.files        = `git ls-files lib`.split("\n")
+  s.require_path = 'lib'
+  s.rubygems_version = '>= 2.0.0'
   s.homepage    = 'https://github.com/ksearfos/mutability'
 
-  s.add_development_dependency 'pry-plus'
-  s.add_development_dependency 'guard-rspec'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'gem-release'
 end
