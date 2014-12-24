@@ -1,5 +1,5 @@
 # define subject, original, additional, and full
-shared_examples Mutable do
+shared_examples 'Mutable' do
   it 'retains its original identity' do
     expect(subject.original).to eq(original)
   end

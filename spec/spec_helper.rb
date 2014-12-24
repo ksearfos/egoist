@@ -1,5 +1,5 @@
 require 'rspec'
-require 'egoist'
+require 'mutability'
 require 'pathname'
 
 here = Pathname.new File.dirname(__FILE__)

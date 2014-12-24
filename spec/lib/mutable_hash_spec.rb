@@ -22,6 +22,6 @@ module Mutability
       end.to output(string).to_stdout
     end
 
-    it_behaves_like Mutable
+    it_behaves_like 'Mutable'
   end
 end

@@ -32,6 +32,7 @@ EOS
 
   s.add_development_dependency 'pry-plus'
   s.add_development_dependency 'guard-rspec'
+  s.add_development_dependency 'rubocop'
   s.add_development_dependency 'gem-release'
 
   s.add_runtime_dependency 'active_support/hash_with_indifferent_access'

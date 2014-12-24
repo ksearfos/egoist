@@ -2,15 +2,16 @@ require 'forwardable'
 
 module Mutability
   class Mutable
-    extend 'Forwardable'
+    extend Forwardable
 
-    def_delegator :@self, MUTABILITY::DELEGATED_METHODS
+    def_delegators :@self, *Mutability::DELEGATED_METHODS
 
-    attr_reader :self, :original
+    attr_reader :original
+    attr_accessor :self
 
     def initialize(original)
-      @self = original
       @original = original.freeze   # don't modify, even accidentally!
+      revert!
     end
 
     def revert!

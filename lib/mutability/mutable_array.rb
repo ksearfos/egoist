@@ -1,9 +1,9 @@
-module Mutability
-  class MutableArray
-    include Mutability
+require_relative 'mutable'
 
-    def initialize(*args)
-      super Array.new(*args)
+module Mutability
+  class MutableArray < Mutable
+    def initialize(array)
+      super array
     end
   end
 end
