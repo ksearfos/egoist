@@ -36,4 +36,14 @@ shared_examples 'Mutable' do
       expect(subject).to eq(full)                     # ==, ===
     end
   end
+
+  describe '#respond_to?' do
+    it 'is true of the object responds to the method' do
+      expect(subject).to respond_to :original
+    end
+
+    it 'is true if the delegate responds to that methods' do
+      expect(subject).to respond_to :include?
+    end
+  end
 end

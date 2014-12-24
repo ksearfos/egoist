@@ -38,6 +38,10 @@ module Mutability
       @self = @original.dup         # we want an unfrozen copy, so cannot clone
     end
 
+    def respond_to?(method)
+      super || @self.respond_to?(method)
+    end
+
     private
 
     # cheap delegation

@@ -18,6 +18,16 @@ module Mutability
       end.to output(string).to_stdout
     end
 
+    it 'can be instantiated from an array' do
+      ary = described_class.new [1, 2, 3]
+      expect(ary.self).to eq([1, 2, 3])
+    end
+
+    it 'can be instantiated from a list of elements' do
+      ary = described_class.new(1, 2, 3)
+      expect(ary.self).to eq([1, 2, 3])   # instead of [[1, 2, 3]]
+    end
+
     it_behaves_like 'Mutable'
   end
 end
