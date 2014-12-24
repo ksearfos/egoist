@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mutability (1.0.2)
+    mutability (1.0.3)
 
 GEM
   remote: http://rubygems.org/
