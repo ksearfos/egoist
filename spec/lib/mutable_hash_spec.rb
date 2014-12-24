@@ -16,9 +16,12 @@ module Mutability
     end
 
     it 'acts like a normal Hash' do
-      string = full.inject('') { |str,pair| str << "#{pair.first}: #{pair.last}\n" }
+      string = full.inject('') do
+        |str, pair| str << "#{pair.first}: #{pair.last}\n"
+      end
+
       expect do
-        subject.each { |k,v| puts "#{k}: #{v}" }
+        subject.each { |k, v| puts "#{k}: #{v}" }
       end.to output(string).to_stdout
     end
 

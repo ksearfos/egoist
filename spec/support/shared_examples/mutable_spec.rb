@@ -8,6 +8,20 @@ shared_examples 'Mutable' do
     expect(subject.self).to eq(full)
   end
 
+  describe '#freeze!' do
+    it 'saves the current form of the object as the original' do
+      subject.freeze!
+      expect(subject.original).to eq(full)
+    end
+
+    it 'does NOT prevent further changes' do
+      subject.freeze!
+      size = subject.size
+      expect { subject.shift }.not_to raise_exception
+      expect(subject.size).to eq(size - 1)
+    end
+  end
+
   describe '#revert!' do
     it 'sets it back to its original form' do
       subject.revert!

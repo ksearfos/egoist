@@ -3,8 +3,8 @@ require 'spec_helper'
 module Mutability
   describe MutableArray do
     subject { described_class.new(original) }
-    let(:original) { %w[alpha beta gamma delta epsilon] }
-    let(:additional) { %w[zeta eta theta] }
+    let(:original) { %w(alpha beta gamma delta epsilon) }
+    let(:additional) { %w(zeta eta theta) }
     let(:full) { original + additional }
 
     before do

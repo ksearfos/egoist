@@ -1,5 +1,21 @@
 require 'forwardable'
 
+# **************************************************************************
+# Mutability::Mutable
+#
+# This class adds a wrapper around a an object that keeps an unchanged
+#  copy of the object.  This allows it to be mutated as much as needed and
+#  still be compared against the original version, or even reset to the
+#  original.
+#
+# Adds the freeze! and revert! methods and delegates most methods to the
+#  working version (@self).  The following methods act upon the Mutable
+#  object itself and not its working version:
+#    - #inspect
+#    - #=
+#    - any equality methods that are not built on #== or #===
+# **************************************************************************
+
 module Mutability
   class Mutable
     extend Forwardable
@@ -12,6 +28,10 @@ module Mutability
     def initialize(original)
       @original = original.freeze   # don't modify, even accidentally!
       revert!
+    end
+
+    def freeze!
+      @original = @self.dup.freeze
     end
 
     def revert!

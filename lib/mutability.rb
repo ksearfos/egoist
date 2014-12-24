@@ -1,5 +1,5 @@
 module Mutability
-  DELEGATED_METHODS = %i[to_s == === is_a? kind_of?]
+  DELEGATED_METHODS = %i(to_s == === is_a? kind_of?)
 end
 
 # these use this module, so need to require post-definition
