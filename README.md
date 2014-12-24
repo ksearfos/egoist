@@ -46,7 +46,7 @@ Imagine a class representing a deck of cards. There are 52 cards in a deck, and 
 ```
 
 ### Hash example
-Now imagine a class representing foreign-language flashcards.  There are 10 of them, and after you learn them you want to remove the ones you have mastered to be set aside.  But you don't want to throw them out, so that you can review the full set later.
+Now imagine a class representing foreign-language flashcards for the numbers 1-10.  As you learn them you want to remove the ones you have mastered to be set aside.  But you don't want to throw them out, so that you can review the full set later.
 ```
   class FrenchNumbers
     attr_reader :flashcards
@@ -76,11 +76,12 @@ Now imagine a class representing foreign-language flashcards.  There are 10 of t
 
     def review
       until @flashcards.empty?
+        puts "\nMixing cards..."
         mix
 
         # no, I wouldn't normally write this much code in a single method
         @flashcards.each do |english, french|
-          print "#{english}\n >> "
+          print "#{english} > "
           gets guess
 
           if guess == 'QUIT'
@@ -88,20 +89,41 @@ Now imagine a class representing foreign-language flashcards.  There are 10 of t
           elsif guess == french
             remove_card(english)
           end
+
+          puts ""
         end
       end
 
-      puts "Congratulations!  You have learned all the flashcards!"
+      puts "\nCongratulations!  You have learned all the flashcards!"
     end
   end
 
   flashcards = FrenchNumbers.new
   flashcards.review
-    $> >> QUIT   # assume there are 5 left
+
+    Mixing cards...
+    three > trois
+    ten > dix
+    one > un
+    four > quatre
+    seven > set     # wrong
+    nine > neuf
+    six > QUIT      # 2, 5, 6, 7, 8 remain
 
   # some time later...
   flashcards.review
-    $> Congratulations!  You have learned all the flashcards!
+    Mixing cards...
+    eight > uit     # wrong
+    six > six
+    two > deu       # wrong
+    five > cinq
+    seven > sept
+
+    Mixing cards...
+    two > deux
+    eight > huit
+
+    Congratulations!  You have learned all the flashcards!
 
   # then the mid-term rolls around...
   flashcards.flashcards.revert!
