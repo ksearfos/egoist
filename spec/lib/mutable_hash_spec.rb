@@ -4,10 +4,10 @@ module Mutability
   describe MutableHash do
     subject { described_class.new(original) }
     let(:original) do
-      { a: alpha, b: beta, g: gamma, d: delta, e: epsilon }
+      HashWithIndifferentAccess.new(a: 'alpha', b: 'beta', g: 'gamma', d: 'delta', e: 'epsilon')
     end
     let(:additional) do
-      { z: zeta, y: eta, th: theta }
+      { z: 'zeta', y: 'eta', th: 'theta' }
     end
     let(:full) { original.merge additional }
 
@@ -16,7 +16,7 @@ module Mutability
     end
 
     it 'acts like a normal Hash' do
-      string = full.map { |k,v| "#{k}: #{v}\n" }
+      string = full.inject('') { |str,pair| str << "#{pair.first}: #{pair.last}\n" }
       expect do
         subject.each { |k,v| puts "#{k}: #{v}" }
       end.to output(string).to_stdout
