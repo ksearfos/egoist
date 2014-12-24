@@ -1,47 +1,111 @@
-egoist
+mutability
 ======
 
-Objects with a strong sense of identity.
+Arrays and Hashes that retain their original identities, even after modification.
 
-The Egoist module (when included) adds the ability for an object to track itself at various states, and even to revert to a previous state if desired.  In the simplest terms, this eliminates the need for a duplicate object floating around that stores the original form of something that gets modified a lot.
+Mutability is a module that provides the very simple ability to designate an "original" version of an object that is frozen, and will not change even if the working copy of the object does.
 
-In particular, the gem comes with predefined Hash and Array variants that include the module.  This is helpful in any cases where you want to work with some sort of collection, adding and subtracting and otherwise modifying its elements, and still keep track of its original form.
+This gem comes with the MutableHash and MutableArray, which provide all the functionality of normal Ruby Arrays/Hashes except with the ability to retain a copy of the original form separate from the working version.  This means that they can be modified and the original can be both reviewed and reverted to later on.
 
-For example, imagine you are working with a deck of cards.  The deck needs to be mutable -- that is, it has to change to keep up with what cards have been dealt and what order they were shuffled into.  But occasionally you want to either peak at the full deck in its current order, regardless of what was shuffled -- or even revert back to out-of-the-box order!  With Egoist, this is trivial.
+The MutableHash/Array both inherit from the Mutable class, which is also packaged in the gem.  If you have your own class you want to add the functionality to, create a Mutable class inherited from Mutable and initialize the way I did:
 ```
-class Deck
-  attr_reader :cards
-  
-  def initialize
-    @cards = EgoistArray(1..52.to_a)
-    @cards.save!                  # original order
+  class MutableThing < Mutable
+    def initialize(thing = Thing.new)
+      super thing
+    end
   end
-  
-  def shuffle
-    @cards.shuffle!
-    @cards.save!('shuffled')      # shuffled order
-  end
-  
-  def deal(amount)
-    @cards.shift(amount)
-  end
-  
-  def redeal
-    @cards.revert!
-    shuffle
-    deal
-  end
-end
-
-d = Deck.new
-d.shuffle                      #==>  [24, 29, 5, 1, 51, 41, 39, 21, 45, 7, 19, 42, 23, 31, 32, 50, 34, 3, 17, 22, 10, 4, 15, 35, 40, 52, 38, 14, 27, 46, 9, 12, 2, 26, 8, 6, 18, 44, 49, 36, 11, 25, 13, 28, 48, 47, 20, 16, 33, 43, 37, 30]
-4.times { d.deal(5) }
-
-d.deck.shuffled                #==> [24, 29, 5, 1, 51, 41, 39, 21, 45, 7, 19, 42, 23, 31, 32, 50, 34, 3, 17, 22, 10, 4, 15, 35, 40, 52, 38, 14, 27, 46, 9, 12, 2, 26, 8, 6, 18, 44, 49, 36, 11, 25, 13, 28, 48, 47, 20, 16, 33, 43, 37, 30]
-d.redeal
-d.deck.original                #==> 1..52
-d.deck.shuffled                #==> [14, 37, 29, 26, 23, 51, 25, 19, 8, 11, 47, 33, 9, 7, 44, 52, 45, 36, 2, 31, 30, 41, 1, 27, 21, 4, 28, 32, 5, 22, 50, 40, 15, 24, 38, 17, 39, 3, 42, 48, 18, 12, 6, 43, 16, 49, 13, 46, 20, 35, 10, 34]
-
-4.times { d.deal(5) }
-d.deck.revert!(:shuffled)      #==> [14, 37, 29, 26, 23, 51, 25, 19, 8, 11, 47, 33, 9, 7, 44, 52, 45, 36, 2, 31, 30, 41, 1, 27, 21, 4, 28, 32, 5, 22, 50, 40, 15, 24, 38, 17, 39, 3, 42, 48, 18, 12, 6, 43, 16, 49, 13, 46, 20, 35, 10, 34]
 ```
+
+### Array example
+Imagine a class representing a deck of cards. There are 52 cards in a deck, and they are in order when first taken out of the box.
+```
+  class DeckOfCards
+    attr_reader :cards
+
+    def initialize
+      @cards = MutableArray.new(1..52.to_a)
+    end
+
+    def shuffle
+      @cards.shuffle
+    end
+
+    def deal(amt)
+      @cards.take(amt)
+    end
+  end
+
+  deck = DeckOfCards.new
+  deck.shuffle
+  deck.cards.revert!    # set back to out-of-box order
+
+  deck.shuffle
+  deck.cards.freeze!    # remember order after shuffling
+  deck.deal(16)
+  deck.cards.revert!    # set back to shuffling order, essentially un-deal
+```
+
+### Hash example
+Now imagine a class representing foreign-language flashcards.  There are 10 of them, and after you learn them you want to remove the ones you have mastered to be set aside.  But you don't want to throw them out, so that you can review the full set later.
+```
+  class FrenchNumbers
+    attr_reader :flashcards
+
+    def initialize
+      @flashcards = MutableHash.new(
+          one: 'une',
+          two: 'deux',
+          three: 'trois',
+          four: 'quatre',
+          five: 'cinq',
+          six: 'six',
+          seven: 'sept',
+          eight: 'huit',
+          nine: 'neuf',
+          ten: 'dix'
+      )
+    end
+
+    def mix
+      @cards.shuffle
+    end
+
+    def remove_card(card_key)
+      @card.delete_if { |k, _v| k == card_key }
+    end
+
+    def review
+      until @flashcards.empty?
+        mix
+
+        # no, I wouldn't normally write this much code in a single method
+        @flashcards.each do |english, french|
+          print "#{english}\n >> "
+          gets guess
+
+          if guess == 'QUIT'
+            break
+          elsif guess == french
+            remove_card(english)
+          end
+        end
+      end
+
+      puts "Congratulations!  You have learned all the flashcards!"
+    end
+  end
+
+  flashcards = FrenchNumbers.new
+  flashcards.review
+    $> >> QUIT   # assume there are 5 left
+
+  # some time later...
+  flashcards.review
+    $> Congratulations!  You have learned all the flashcards!
+
+  # then the mid-term rolls around...
+  flashcards.flashcards.revert!
+  flashcards.review      # review them ALL
+```
+
+Okay, so those are fairly contrived examples.  Still, they should provide an adequate idea of how to use the MutableArray/MutableHash.
