@@ -31,11 +31,11 @@ module Mutability
     end
 
     def freeze!
-      @original = @self.dup.freeze
+      @original = deep_clone(@self)
     end
 
     def revert!
-      @self = @original.dup         # we want an unfrozen copy, so cannot clone
+      @self = deep_clone(@original)        # we want an unfrozen copy, so cannot clone
     end
 
     def respond_to?(method)
@@ -47,6 +47,10 @@ module Mutability
     # cheap delegation
     def method_missing(sym, *args, &block)
       @self.send(sym, *args, &block)
+    end
+
+    def deep_clone(hash)
+      Marshal.load(Marshal.dump(hash))
     end
   end
 end
